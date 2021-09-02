@@ -15,12 +15,12 @@ class Login extends React.Component {
       emailValidate: false,
       passwordValidate: false,
     };
-    // this.emailValidation = this.emailValidation.bind(this);
-    // this.passwordValidation = this.passwordValidation.bind(this);
-    // this.loginValidation = this.loginValidation.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    // this.emailValidation = this.emailValidation.bind(this);
+    // this.passwordValidation = this.passwordValidation.bind(this);
+    // this.loginValidation = this.loginValidation.bind(this);
   }
 
   handleChangeEmail(event) {
