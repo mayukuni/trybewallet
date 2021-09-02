@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../actions';
 
 // requisito 2 feito com a ajuda da Mayu <3
 
@@ -17,6 +19,7 @@ class Login extends React.Component {
     // this.loginValidation = this.loginValidation.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChangeEmail(event) {
@@ -35,6 +38,14 @@ class Login extends React.Component {
       password: event.target.value,
       passwordValidate,
     });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const { dispatchSetLogin, history } = this.props;
+    const { email } = this.state;
+    dispatchSetLogin(email);
+    history.push('/carteira');
   }
 
   // loginValidation() {
@@ -97,14 +108,31 @@ class Login extends React.Component {
             onChange={ this.handleChangePassword }
           />
         </label>
-        <Link to="/carteira">
-          <button type="submit" disabled={ !(passwordValidate && emailValidate) }>
-            Entrar
-          </button>
-        </Link>
+        {/* <Link to="/carteira"> */}
+        <button
+          type="button"
+          disabled={ !(passwordValidate && emailValidate) }
+          onClick={ this.handleSubmit }
+        >
+          Entrar
+        </button>
+        {/* por que sem o onClick ele redireciona
+         com o <Link to="/carteira"> e com o onClick não? */}
+        {/* </Link> */}
       </form>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatchSetLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetLogin: (email) => dispatch(login(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
