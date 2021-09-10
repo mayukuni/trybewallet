@@ -107,6 +107,7 @@ class Login extends React.Component {
             data-testid="password-input"
             value={ password }
             onChange={ this.handleChangePassword }
+            maxLength="15"
           />
         </label>
         {/* <Link to="/carteira"> */}
