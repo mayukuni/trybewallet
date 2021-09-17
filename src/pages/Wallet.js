@@ -1,27 +1,35 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
-import fetchApi from '../services/fetchApi';
 import Header from '../components/Header';
 
 export default class Wallet extends React.Component {
-  // constructor(props) {
-  //   super(props);
+  constructor(props) {
+    super(props);
 
-  //   this.state = {
-  //     currency: '',
-  //   };
-  // }
+    this.state = {
+      currencies: [],
+    };
 
-  async fetchApia() {
-    const results = await fetchApi();
-    this.setState = ({
-      currency: results,
+    this.fetchApi = this.fetchApi.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchApi();
+  }
+
+  async fetchApi() {
+    const URL = 'https://economia.awesomeapi.com.br/json/all';
+    const response = await fetch(URL);
+    const currencies = await response.json();
+    delete currencies.USDT;
+    this.setState({
+      currencies,
     });
   }
 
   render() {
-    this.fetchApia();
+    const { currencies } = this.state;
     return (
       <div>
         <Header />
@@ -36,8 +44,11 @@ export default class Wallet extends React.Component {
           </label>
           <label htmlFor="moeda">
             Moeda
-            <select type="text" name="moeda" id="moeda">
-              <option>Moeda</option>
+            <select id="moeda" name="moeda">
+              {
+                Object.keys(currencies)
+                  .map((currency) => <option key="currency">{ currency }</option>)
+              }
             </select>
           </label>
           <label htmlFor="pagamento">
