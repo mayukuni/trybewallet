@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { removeExpense as removeExpenseAction } from '../actions';
-// import { deleteItem } from '../actions';
 
+// requisitos 9 e 10 feitos com ajuda do Rafael Bamberg
 class Table extends Component {
   render() {
     const { expenses, removeExpense } = this.props;
